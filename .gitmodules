@@ -1,3 +1,6 @@
 [submodule "EXT/glfw"]
 	path = EXT/glfw
 	url = git@github.com:glfw/glfw.git
+[submodule "EXT/glad"]
+	path = EXT/glad
+	url = git@github.com:Dav1dde/glad.git

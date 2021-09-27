@@ -4,6 +4,7 @@ project(learnGraphics)
 
 add_executable(${PROJECT_NAME} SRC/main.cpp)
 
-#add_subdirectory(SRC/)
-
 add_subdirectory(EXT/glfw)
+add_subdirectory(EXT/glad)
+
+target_link_libraries(${PROJECT_NAME} glfw glad)
