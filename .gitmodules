@@ -4,3 +4,9 @@
 [submodule "EXT/glad"]
 	path = EXT/glad
 	url = git@github.com:Dav1dde/glad.git
+[submodule "EXT/freeglut"]
+	path = EXT/freeglut
+	url = git@github.com:dcnieho/FreeGLUT.git
+[submodule "EXT/glload"]
+	path = EXT/glload
+	url = git@github.com:SRombauts/glload.git
