@@ -57,10 +57,21 @@ int main(){
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     //make things to draw
-    float vertices[] = {
+    /*float vertices[] = {
 	-0.5f, -0.5f, 0.0f,
 	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	 0.0f,  0.5f, 0.0f,
+    };*/
+    float triangle1 [] = {
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f,
+	0.5f, 0.5f, 0.0f,
+    };
+
+    float triangle2 [] = {
+	-0.5f, -0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	0.5f, 0.5f, 0.0f,
     };
 
     //set up vertex shader 
@@ -101,15 +112,17 @@ int main(){
 
     //opengl still needs to be told how to interpret the vertex data
 
-    unsigned int VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    unsigned int VBO[2], VAO[2];
+    //triangle2
+    glGenVertexArrays(2, VAO);
+    glGenBuffers(2, VBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then
     // configure vertex attributes(s).
-    glBindVertexArray(VAO);
+    glBindVertexArray(VAO[0]);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, *VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle1)*2, triangle1, GL_STATIC_DRAW);
+
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -122,7 +135,8 @@ int main(){
     // VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind
     // VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0); 
+    glBindVertexArray(0);
+
 
     //render loop
     while(!glfwWindowShouldClose(window)){
@@ -136,8 +150,10 @@ int main(){
 	//draw
 	// draw our first triangle
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need
+        glBindVertexArray(VAO[0]); // seeing as we only have a single VAO there's no need
 	// to bind it every time, but we'll do so to keep things a bit more organized
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindVertexArray(VAO[1]);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	//swap the buffers and check for input
