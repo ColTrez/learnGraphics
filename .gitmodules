@@ -10,3 +10,9 @@
 [submodule "EXT/glload"]
 	path = EXT/glload
 	url = git@github.com:SRombauts/glload.git
+[submodule "EXT/devil"]
+	path = EXT/devil
+	url = git@github.com:DentonW/DevIL.git
+[submodule "EXT/soil"]
+	path = EXT/soil
+	url = git@github.com:kbranigan/Simple-OpenGL-Image-Library.git
