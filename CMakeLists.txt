@@ -6,9 +6,10 @@ add_executable(${PROJECT_NAME} SRC/elementBuffers.cpp)
 
 add_subdirectory(EXT/glfw)
 add_subdirectory(EXT/glad)
+add_subdirectory(EXT/soil)
 #add_subdirectory(EXT/freeglut)
 #add_subdirectory(EXT/glload)
 
 add_link_options(-lGl)
 
-target_link_libraries(${PROJECT_NAME} glfw glad)
+target_link_libraries(${PROJECT_NAME} glfw glad SOIL)

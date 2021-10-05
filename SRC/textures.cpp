@@ -30,7 +30,22 @@ const GLchar* fragmentSource = R"glsl(
     }
 )glsl";
 
-void glInit(){
+int main(){
+
+    glfwInit();
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    GLFWwindow* window = glfwCreateWindow(1920, 1080, "openglDemo", glfwGetPrimaryMonitor(), NULL);
+    glfwMakeContextCurrent(window);
+
+    //initialize glad
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+
     //create the vertex array object
     //this must be made before the vertex buffer object
     //there can be only one, and it holds the vertex buffer objects
@@ -55,7 +70,6 @@ void glInit(){
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     //create element buffer object
-    //the elements in this array say which order to draw elements in vertices[]
     GLuint elements[] = {
         0, 1, 2,
         2, 3, 0
@@ -67,11 +81,10 @@ void glInit(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-}
+    
 
-void initShaders(){
     //create shaders
+
     //vertex shader
     //create shader object
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -114,54 +127,22 @@ void initShaders(){
     //set the color attribute
     GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
     glEnableVertexAttribArray(colAttrib);
-    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float),
-	    (void*)(2*sizeof(float)));
-
-    //cleanup - delete shaders
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-}
-
-void render(GLFWwindow* window){
-    glfwSwapBuffers(window);
-    
-    float black[] = {0.0f, 0.0f, 0.0f, 1.0f};
-
-    glClearBufferfv(GL_COLOR, 0, black);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    int numberOfElements = 6;
-
-    glDrawElements(GL_TRIANGLES, numberOfElements, GL_UNSIGNED_INT, 0);
-
-    glfwPollEvents();
-}
-
-int main(){
-
-    glfwInit();
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    GLFWwindow* window = glfwCreateWindow(1920, 1080, "openglDemo", glfwGetPrimaryMonitor(), NULL);
-    glfwMakeContextCurrent(window);
-
-    //initialize glad
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-
-
-    glInit();
-    initShaders();
+    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(2*sizeof(float)));
 
     //not doing this in the loop makes really fuckin cool glitchy art
     //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     //glClear(GL_COLOR_BUFFER_BIT);
 
     while(!glfwWindowShouldClose(window)){
-	render(window);
+	glfwSwapBuffers(window);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glfwPollEvents();
     }
 
     glfwTerminate();
