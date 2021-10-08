@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21.3)
 
 project(learnGraphics)
 
-add_executable(${PROJECT_NAME} SRC/elementBuffers.cpp)
+add_executable(${PROJECT_NAME} SRC/ex_shader.cpp)
 
 add_subdirectory(EXT/glfw)
 add_subdirectory(EXT/glad)
