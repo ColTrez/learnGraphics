@@ -62,9 +62,13 @@ int main(){
     
     unsigned int vao = createAndLoadVertices();
     
-    Shader bigGay("/home/coltrez/Programs/C++/graphics/learnGraphics/SRC/shaders/rainbowTriangle_vertex.glsl",
-	    "/home/coltrez/Programs/C++/graphics/learnGraphics/SRC/shaders/rainbowTriangle_fragment.glsl");
+    Shader bigGay("/home/coltrez/Programs/C++/graphics/learnGraphics/SRC/shaders/outputPos.glsl",
+	    "/home/coltrez/Programs/C++/graphics/learnGraphics/SRC/shaders/inputPos.glsl");
     bigGay.use();
+    
+    //initialize uniform
+    //int offsetLocation = bigGay.getUniformLocation("offset");
+    //glUniform3f(offsetLocation, 0.2f, 0.0f, 0.0f);
 
     while(!glfwWindowShouldClose(window)){
 	glfwPollEvents();
